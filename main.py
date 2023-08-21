@@ -51,11 +51,35 @@ class TicTacToe:
             if(self.grid["0:0"].text == self.grid["1:0"].text == self.grid["2:0"].text):
                 self.paused = True
         #mid row
+        if(self.grid["0:1"].text != None):
+            if(self.grid["0:1"].text == self.grid["1:1"].text == self.grid["2:1"].text):
+                self.paused = True
         #bottom row
+        if(self.grid["0:2"].text != None):
+            if(self.grid["0:2"].text == self.grid["1:2"].text == self.grid["2:2"].text):
+                self.paused = True
         
         #left column
+        if(self.grid["0:0"].text != None):
+            if(self.grid["0:0"].text == self.grid["0:1"].text == self.grid["0:2"].text):
+                self.paused = True
         #mid column
+        if(self.grid["1:0"].text != None):
+            if(self.grid["1:0"].text == self.grid["1:1"].text == self.grid["1:2"].text):
+                self.paused = True
         #right column
+        if(self.grid["2:0"].text != None):
+            if(self.grid["2:0"].text == self.grid["2:1"].text == self.grid["2:2"].text):
+                self.paused = True
+        
+        #diagonal left-right
+        if(self.grid["0:0"].text != None):
+            if(self.grid["0:0"].text == self.grid["1:1"].text == self.grid["2:2"].text):
+                self.paused = True
+        #diagonal right-left
+        if(self.grid["2:0"].text != None):
+            if(self.grid["2:0"].text == self.grid["1:1"].text == self.grid["0:2"].text):
+                self.paused = True
     
     def logic(self) -> None:
         """perform all the logic for the game loop"""
