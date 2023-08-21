@@ -11,9 +11,10 @@ class TicTacToe:
         self.screen = pygame.display.set_mode((640,480))
         self.display = pygame.Surface((320,240))
         self.clock = pygame.time.Clock()
+        self.paused = False
         self.player = "X"
         self.grid = {
-            "0:0" : Square(self.screen,(0,0)),
+            "0:0" :Square(self.screen,(0,0)),
             "0:1" :Square(self.screen, (0,1)),
             "0:2" :Square(self.screen, (0,2)),
             
@@ -49,20 +50,36 @@ class TicTacToe:
                     pygame.quit()
                     sys.exit()
 
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.paused = not self.paused
+                        print(self.paused)
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    for key, value in self.grid.items():
-                        if value.rect.collidepoint(pygame.mouse.get_pos()):
-                            value.color = (0,255,0)
-                            value.text = self.player
-                            if self.player == "X":
-                                self.player = "O"
-                            elif self.player == "O":
-                                self.player = "X"
+                    if not self.paused:
+                        for key, value in self.grid.items():
+                            if value.rect.collidepoint(pygame.mouse.get_pos()):
+                                value.color = (0,255,0)
+                                value.text = self.player
+                                if self.player == "X":
+                                    self.player = "O"
+                                elif self.player == "O":
+                                    self.player = "X"
+                    
+                    #if game is paused                
+                    elif self.paused:
+                        pass 
                     
             
             
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()),(0,0))
             self.draw_grid()
+            if self.paused:
+                #cover screen with a bit of fog
+                pause_color = pygame.Surface((640,480),pygame.SRCALPHA)
+                pause_color.fill((255,255,255, 150))
+                self.screen.blit(pause_color,(0,0))
+                #draw buttons
+                
             pygame.display.update()
             self.clock.tick(60)
     
