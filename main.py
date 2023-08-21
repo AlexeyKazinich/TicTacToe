@@ -53,6 +53,11 @@ class TicTacToe:
                     for key, value in self.grid.items():
                         if value.rect.collidepoint(pygame.mouse.get_pos()):
                             value.color = (0,255,0)
+                            value.add_text(self.player)
+                            if self.player == "X":
+                                self.player = "O"
+                            elif self.player == "O":
+                                self.player = "X"
                 if event.type == pygame.MOUSEBUTTONUP:
                     pass
                     
