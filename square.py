@@ -1,6 +1,6 @@
 import pygame
 class Square:
-    def __init__(self, screen, coords : tuple):
+    def __init__(self, screen: pygame.display, coords : tuple):
         print(list(coords))
         self.coords = list(coords)
         self.screen = screen
@@ -8,12 +8,13 @@ class Square:
         self.color = (255,255,255)
         self.rect = pygame.Rect(((screen.get_width() * self.coords[0] /3),(screen.get_height() * self.coords[1] /3)), #location
                                 (screen.get_width() / 3,screen.get_height()/ 3)) #size
+        
     @property
-    def text(self):
+    def text(self) -> None:
         return self._text
     
     @text.setter
-    def text(self, text: str) -> str:
+    def text(self, text: str) -> None:
         self._text = text
     
     def draw(self, screen : pygame.display) -> None:
