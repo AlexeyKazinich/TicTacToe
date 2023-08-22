@@ -1,2 +1,4 @@
 # TicTacToe
-to play this game just run the main.py file
+to play the game
+pip install -r requirements.txt
+run main.py
