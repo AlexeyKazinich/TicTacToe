@@ -1,6 +1,7 @@
 import sys
 import pygame
 from square import Square
+from objects import Button
 
 RENDER_SCALE = 2.0
 
@@ -27,6 +28,10 @@ class TicTacToe:
             "2:2" :Square(self.screen,(2,2))
             
         }
+        
+        self.buttons = {
+            "restart" : Button(0,30,100,30,"Restart",self.screen,True)
+        }
 
     def draw_grid(self) -> None:
         '''draws the squares and the grid'''
@@ -39,7 +44,26 @@ class TicTacToe:
         for i in range(3):
             pygame.draw.line(self.screen,(0,0,0),(0,self.screen.get_height() / 3 * i),(self.screen.get_width(),self.screen.get_height() / 3 * i))
             
-    def swap_player(self):
+    def restart_game(self) -> None:
+        #create new grid
+        self.grid = {
+            "0:0" :Square(self.screen,(0,0)),
+            "0:1" :Square(self.screen, (0,1)),
+            "0:2" :Square(self.screen, (0,2)),
+            
+            "1:0" :Square(self.screen,(1,0)),
+            "1:1" :Square(self.screen,(1,1)),
+            "1:2" :Square(self.screen,(1,2)),
+            
+            "2:0" :Square(self.screen,(2,0)),
+            "2:1" :Square(self.screen,(2,1)),
+            "2:2" :Square(self.screen,(2,2))
+            
+        }
+        self.paused = False
+    
+    
+    def swap_player(self) -> None:
         if self.player == "X":
             self.player = "O"
         elif self.player == "O":
@@ -80,6 +104,15 @@ class TicTacToe:
         if(self.grid["2:0"].text != None):
             if(self.grid["2:0"].text == self.grid["1:1"].text == self.grid["0:2"].text):
                 self.paused = True
+                
+        #if the entire grid is full
+        count = 0
+        for key, value in self.grid.items():
+            if value.text != None:
+                count += 1
+            
+        if count >= 9:
+            self.paused = True
     
     def logic(self) -> None:
         """perform all the logic for the game loop"""
@@ -102,8 +135,11 @@ class TicTacToe:
                             
                 
                 #if game is paused                
-                elif self.paused:
-                    pass 
+                elif self.paused and mouse_buttons[0]:
+                    for key, value in self.buttons.items():
+                        if value.collidepoint(pygame.mouse.get_pos()):
+                            self.restart_game()
+                     
     
     def draw(self) -> None:
         """draw all the things"""
@@ -118,6 +154,8 @@ class TicTacToe:
             pause_color.fill((255,255,255, 150))
             self.screen.blit(pause_color,(0,0))
             #draw buttons
+            for key, value in self.buttons.items():
+                value.draw()
         
     def run(self) -> None:
         '''main gameloop, call this to run the game'''
