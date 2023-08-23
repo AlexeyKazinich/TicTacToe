@@ -16,6 +16,9 @@ class Square:
     @text.setter
     def text(self, text: str) -> None:
         self._text = text
+        
+    def reset(self) -> None:
+        self._text = None
     
     def draw(self, screen : pygame.display) -> None:
         """draw the square, and the text if it has one"""

@@ -45,21 +45,9 @@ class TicTacToe:
             pygame.draw.line(self.screen,(0,0,0),(0,self.screen.get_height() / 3 * i),(self.screen.get_width(),self.screen.get_height() / 3 * i))
             
     def restart_game(self) -> None:
-        #create new grid
-        self.grid = {
-            "0:0" :Square(self.screen,(0,0)),
-            "0:1" :Square(self.screen, (0,1)),
-            "0:2" :Square(self.screen, (0,2)),
-            
-            "1:0" :Square(self.screen,(1,0)),
-            "1:1" :Square(self.screen,(1,1)),
-            "1:2" :Square(self.screen,(1,2)),
-            
-            "2:0" :Square(self.screen,(2,0)),
-            "2:1" :Square(self.screen,(2,1)),
-            "2:2" :Square(self.screen,(2,2))
-            
-        }
+        #reset grid
+        for _, value in self.grid.items():
+            value.reset()
         self.paused = False
     
     
